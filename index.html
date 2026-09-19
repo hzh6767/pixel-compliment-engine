@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#17191f">
+  <title>Pixel Compliment Engine</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="cabinet">
+    <header class="topbar"><div class="pixel-logo" aria-hidden="true">+</div><div><p class="eyebrow">CARTRIDGE 02 / BUILD 198X</p><h1>PIXEL COMPLIMENT ENGINE</h1></div><div class="led"><i></i> READY</div></header>
+    <section class="screen-grid">
+      <form id="compliment-form" class="card command-card">
+        <div class="card-title"><span>INPUT</span><b>WHO IS AWESOME?</b></div>
+        <label for="handle">Player handle</label><input id="handle" maxlength="24" placeholder="YOUR NAME">
+        <label for="vibe">Power-up flavor</label><select id="vibe"><option value="craft">CREATIVE CRAFT</option><option value="brave">BOLD MOVES</option><option value="kind">KIND ENERGY</option><option value="chaos">CHAOTIC GOOD</option></select>
+        <button class="pixel-button" type="submit">GENERATE PRAISE <span>></span></button>
+        <p class="hint">Uses 100% locally stored encouragement.</p>
+      </form>
+      <section class="card output-card" aria-live="polite">
+        <div class="card-title"><span>OUTPUT</span><b>COMPLIMENT FOUND</b></div>
+        <div class="stars" aria-hidden="true">* * * * *</div>
+        <p id="compliment" class="compliment">Insert a handle to unlock your rare compliment.</p>
+        <div class="output-footer"><span id="rarity">RARITY: ???</span><button id="copy" class="link-button" disabled>COPY</button></div>
+      </section>
+    </section>
+    <section class="scoreboard card"><div class="score-title"><span>SESSION SCORE</span><strong id="score">000</strong></div><div class="score-track"><span id="score-fill"></span></div><div class="score-note"><span id="combo">COMBO x0</span><span>MAXIMUM NICE ACHIEVED: <b id="max">000</b></span></div></section>
+    <footer><span>PIXELSOFT INDUSTRIES</span><span>NO CLOUD / NO ADS / JUST VIBES</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
