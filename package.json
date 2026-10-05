@@ -1,0 +1,10 @@
+{
+  "name": "pixel-compliment-engine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline pixel-styled compliment machine. No dependencies, no build step.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/compliment.test.mjs"
+  }
+}
