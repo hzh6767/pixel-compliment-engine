@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { runInNewContext } from 'node:vm';
 
 const require = createRequire(import.meta.url);
 const { banks, pick, roll, rate, praise } = require('../app.js');
@@ -60,4 +61,37 @@ test('rarity thresholds match the documented tiers', () => {
   assert.equal(rate(85), 'RARE');
   assert.equal(rate(86), 'ULTRA RARE');
   assert.equal(rate(99), 'ULTRA RARE');
+});
+
+test('a delayed clipboard result cannot change the next compliment or its copy feedback', async () => {
+  const elements = new Map();
+  function querySelector(selector) {
+    if (!elements.has(selector)) {
+      elements.set(selector, {
+        value: '', style: {},
+        addEventListener(type, listener) { this[type] = listener; }
+      });
+    }
+    return elements.get(selector);
+  }
+  let finishCopy;
+  const clipboard = {
+    writeText() {
+      return new Promise((resolve, reject) => { finishCopy = { resolve, reject }; });
+    }
+  };
+  runInNewContext(readFileSync(join(root, 'app.js'), 'utf8'), {
+    document: { querySelector }, navigator: { clipboard }, clearTimeout, setTimeout
+  });
+  querySelector('#vibe').value = 'craft';
+  const generate = () => querySelector('#compliment-form').submit({ preventDefault() {} });
+  const copy = querySelector('#copy');
+  generate();
+  for (const outcome of ['resolve', 'reject']) {
+    const pending = copy.click();
+    generate();
+    finishCopy[outcome]();
+    await pending;
+    assert.equal(copy.textContent, 'COPY');
+  }
 });
